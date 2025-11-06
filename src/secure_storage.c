@@ -117,6 +117,8 @@ int save_credential(const credential *cred) {
     fwrite(&entry, sizeof(encrypted_credential_entry), 1, fp);
     fclose(fp);
 
+    chmod(creds_path, 0600);
+
     return 0;
 }
 
@@ -134,7 +136,7 @@ int load_credential(credential *cred) {
     while (fread(&entry, sizeof(encrypted_credential_entry), 1, fp) == 1) {
         if (strcmp(entry.protocol, cred->protocol) == 0 &&
             strcmp(entry.host, cred->host) == 0 &&
-            strcmp(entry.username, cred->username) == 0) {
+            (cred->username[0] == '\0' || strcmp(entry.username, cred->username) == 0)) {
             
             unsigned char decrypted_password[MAX_FIELD_LEN];
             if (crypto_secretbox_open_easy(decrypted_password, entry.encrypted_password, entry.encrypted_password_len, entry.nonce, key) != 0) {
