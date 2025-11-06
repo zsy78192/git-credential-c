@@ -22,7 +22,7 @@ main() {
     check_root
 
     echo ">>> Step 1: Installing dependencies (Development Tools, libsodium-devel, git)..."
-    dnf install -y 'Development Tools' libsodium-devel git
+    dnf groupinstall -y "Development Tools" && dnf install -y libsodium-devel git
 
     echo ">>> Step 2: Preparing Makefile for Linux environment..."
     # Remove macOS-specific Homebrew paths. A backup `Makefile.bak` will be created.
