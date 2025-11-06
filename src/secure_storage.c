@@ -146,6 +146,7 @@ int load_credential(credential *cred) {
             }
             decrypted_password[entry.encrypted_password_len - crypto_secretbox_MACBYTES] = '\0';
             strncpy(cred->password, (char*)decrypted_password, MAX_FIELD_LEN - 1);
+            strncpy(cred->username, entry.username, MAX_FIELD_LEN - 1);
             
             fclose(fp);
             return 0; // Found and decrypted
