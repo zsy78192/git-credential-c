@@ -1,0 +1,6 @@
+# Build artifacts
+build/
+*.o
+
+# Executable
+git-credential-c
